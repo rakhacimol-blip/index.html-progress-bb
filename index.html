@@ -202,7 +202,6 @@ footer {
 }
 
 @media(max-width:700px) {
-
     .dashboard {
         grid-template-columns: repeat(2,1fr);
     }
@@ -237,9 +236,7 @@ footer {
 <div class="container">
 
 <!-- DASHBOARD -->
-
 <div class="dashboard">
-
     <div class="stat">
         <span>Berat Awal</span>
         <strong>90 KG</strong>
@@ -259,915 +256,336 @@ footer {
         <span>Sudah Turun</span>
         <strong id="totalLost">0 KG</strong>
     </div>
-
 </div>
-
 
 <!-- INPUT BERAT -->
-
 <div class="card">
-
-    <h2>⚖️ Catat Berat Badan</h2>
-
+    <h2>⚖️️ Catat Berat Badan</h2>
     <div class="input-grid">
-
-        <input
-            type="date"
-            id="date"
-        >
-
-        <input
-            type="number"
-            id="weight"
-            placeholder="Berat (kg)"
-            step="0.1"
-            min="1"
-        >
-
-        <button onclick="saveWeight()">
-            Simpan
-        </button>
-
+        <input type="date" id="date">
+        <input type="number" id="weight" placeholder="Berat (kg)" step="0.1" min="1">
+        <button onclick="saveWeight()">Simpan</button>
     </div>
-
 </div>
-
 
 <!-- PROGRESS -->
-
 <div class="card">
-
     <h2>🎯 Progress 90 → 80 KG</h2>
-
     <div class="progress-bg">
-        <div
-            class="progress-bar"
-            id="progressBar">
-        </div>
+        <div class="progress-bar" id="progressBar"></div>
     </div>
-
-    <p
-        class="progress-info"
-        id="progressText">
-        Progress: 0%
-    </p>
-
+    <p class="progress-info" id="progressText">Progress: 0%</p>
 </div>
-
 
 <!-- GRAFIK -->
-
 <div class="card">
-
     <h2>📈 Grafik Perjalanan Berat</h2>
-
     <div class="chart-box">
-
         <canvas id="chart"></canvas>
-
     </div>
-
 </div>
-
 
 <!-- BMI -->
-
 <div class="card">
-
     <h2>📏 Kalkulator BMI</h2>
-
     <div class="bmi-grid">
-
-        <input
-            type="number"
-            id="height"
-            placeholder="Tinggi badan (cm)"
-        >
-
-        <input
-            type="number"
-            id="bmiWeight"
-            placeholder="Berat badan (kg)"
-        >
-
-        <button onclick="calculateBMI()">
-            Hitung BMI
-        </button>
-
+        <input type="number" id="height" placeholder="Tinggi badan (cm)">
+        <input type="number" id="bmiWeight" placeholder="Berat badan (kg)">
+        <button onclick="calculateBMI()">Hitung BMI</button>
     </div>
-
-    <div
-        class="bmi-result"
-        id="bmiResult">
+    <div class="bmi-result" id="bmiResult">
         Masukkan tinggi dan berat badan.
     </div>
-
 </div>
-
 
 <!-- CHECKLIST -->
-
 <div class="card">
-
     <h2>⚽ Checklist Olahraga</h2>
-
-    <label class="check">
-        <input type="checkbox">
-        Senin — Jogging / Jalan cepat 30–45 menit
-    </label>
-
-    <label class="check">
-        <input type="checkbox">
-        Selasa — Futsal / Sepak bola 60–90 menit
-    </label>
-
-    <label class="check">
-        <input type="checkbox">
-        Rabu — Jalan cepat 30–45 menit
-    </label>
-
-    <label class="check">
-        <input type="checkbox">
-        Kamis — Jogging 30–45 menit
-    </label>
-
-    <label class="check">
-        <input type="checkbox">
-        Jumat — Istirahat / jalan santai
-    </label>
-
-    <label class="check">
-        <input type="checkbox">
-        Sabtu — Futsal / Sepak bola 60–90 menit
-    </label>
-
-    <label class="check">
-        <input type="checkbox">
-        Minggu — Jogging ringan 30–45 menit
-    </label>
-
+    <label class="check"><input type="checkbox"> Senin — Jogging / Jalan cepat 30–45 menit</label>
+    <label class="check"><input type="checkbox"> Selasa — Futsal / Sepak bola 60–90 menit</label>
+    <label class="check"><input type="checkbox"> Rabu — Jalan cepat 30–45 menit</label>
+    <label class="check"><input type="checkbox"> Kamis — Jogging 30–45 menit</label>
+    <label class="check"><input type="checkbox"> Jumat — Istirahat / jalan santai</label>
+    <label class="check"><input type="checkbox"> Sabtu — Futsal / Sepak bola 60–90 menit</label>
+    <label class="check"><input type="checkbox"> Minggu — Jogging ringan 30–45 menit</label>
 </div>
 
-
 <!-- RIWAYAT -->
-
 <div class="card">
-
     <h2>📋 Riwayat Berat Badan</h2>
-
     <table>
-
         <thead>
-
             <tr>
                 <th>Tanggal</th>
                 <th>Berat</th>
                 <th>Aksi</th>
             </tr>
-
         </thead>
-
         <tbody id="history"></tbody>
-
     </table>
-
 </div>
-
 
 <!-- TIPS -->
-
 <div class="card">
-
     <h2>💡 Catatan Diet</h2>
-
     <div class="tips">
-
-        <p>
-            Jangan sengaja membuat diri kelaparan hanya untuk
-            mengejar angka di timbangan.
-        </p>
-
+        <p>Jangan sengaja membuat diri kelaparan hanya untuk mengejar angka di timbangan.</p>
         <br>
-
-        <p>
-            Fokus pada makanan sederhana seperti telur, tahu,
-            tempe, sayuran, buah, dan nasi dengan porsi yang
-            sesuai kebutuhan.
-        </p>
-
+        <p>Fokus pada makanan sederhana seperti telur, tahu, tempe, sayuran, buah, dan nasi dengan porsi yang sesuai kebutuhan.</p>
         <br>
-
-        <p>
-            Minum air putih yang cukup dan tetap berikan tubuh
-            waktu untuk beristirahat.
-        </p>
-
+        <p>Minum air putih yang cukup dan tetap berikan tubuh waktu untuk beristirahat.</p>
     </div>
-
 </div>
 
 </div>
-
 
 <footer>
-
     <h3>🔥 90 KG → 80 KG</h3>
-
     <p>Pelan-pelan, konsisten, dan jangan menyerah.</p>
-
 </footer>
 
-
 <script>
-
 /* =========================
    DATA BERAT BADAN
 ========================= */
-
-let weightData =
-    JSON.parse(
-        localStorage.getItem("dietWeightData")
-    ) || [];
-
+let weightData = JSON.parse(localStorage.getItem("dietWeightData")) || [];
 
 /* TANGGAL DEFAULT */
+document.getElementById("date").valueAsDate = new Date();
 
-document.getElementById("date").valueAsDate =
-    new Date();
+/* INSIALISASI TAMPILAN AWAL */
+window.onload = function() {
+    updateAll();
+};
 
+/* =========================
+   UPDATE SELURUH TAMPILAN
+========================= */
+function updateAll() {
+    updateDashboard();
+    updateHistory();
+    drawChart();
+}
 
 /* =========================
    SIMPAN BERAT
 ========================= */
-
 function saveWeight() {
+    const date = document.getElementById("date").value;
+    const weight = parseFloat(document.getElementById("weight").value);
 
-    const date =
-        document.getElementById("date").value;
-
-    const weight =
-        parseFloat(
-            document.getElementById("weight").value
-        );
-
-
-    if (!date || !weight || weight <= 0) {
-
-        alert(
-            "Masukkan tanggal dan berat yang benar."
-        );
-
+    if (!date || isNaN(weight) || weight <= 0) {
+        alert("Masukkan tanggal dan berat yang benar.");
         return;
     }
 
-
-    const existing =
-        weightData.findIndex(
-            item => item.date === date
-        );
-
+    const existing = weightData.findIndex(item => item.date === date);
 
     if (existing >= 0) {
-
-        weightData[existing].weight =
-            weight;
-
+        weightData[existing].weight = weight;
     } else {
-
-        weightData.push({
-            date: date,
-            weight: weight
-        });
-
+        weightData.push({ date: date, weight: weight });
     }
 
-
-    weightData.sort(
-        (a,b) =>
-            new Date(a.date) -
-            new Date(b.date)
-    );
-
-
-    localStorage.setItem(
-        "dietWeightData",
-        JSON.stringify(weightData)
-    );
-
+    weightData.sort((a,b) => new Date(a.date) - new Date(b.date));
+    localStorage.setItem("dietWeightData", JSON.stringify(weightData));
 
     document.getElementById("weight").value = "";
-
     updateAll();
-
 }
-
 
 /* =========================
    HAPUS DATA
 ========================= */
-
 function deleteWeight(index) {
-
-    if (
-        confirm(
-            "Yakin ingin menghapus data ini?"
-        )
-    ) {
-
+    if (confirm("Yakin ingin menghapus data ini?")) {
         weightData.splice(index,1);
-
-        localStorage.setItem(
-            "dietWeightData",
-            JSON.stringify(weightData)
-        );
-
+        localStorage.setItem("dietWeightData", JSON.stringify(weightData));
         updateAll();
-
     }
-
 }
-
 
 /* =========================
    UPDATE DASHBOARD
 ========================= */
-
 function updateDashboard() {
+    let current = weightData.length ? weightData[weightData.length - 1].weight : 90;
+    let lost = Math.max(0, 90 - current);
 
-    let current =
-        weightData.length
-        ? weightData[weightData.length - 1].weight
-        : 90;
+    document.getElementById("currentWeight").textContent = current.toFixed(1) + " KG";
+    document.getElementById("totalLost").textContent = lost.toFixed(1) + " KG";
 
+    let progress = ((90 - current) / 10) * 100;
+    progress = Math.max(0, Math.min(100, progress));
 
-    let lost =
-        Math.max(
-            0,
-            90 - current
-        );
-
-
-    document.getElementById(
-        "currentWeight"
-    ).textContent =
-        current.toFixed(1) + " KG";
-
-
-    document.getElementById(
-        "totalLost"
-    ).textContent =
-        lost.toFixed(1) + " KG";
-
-
-    let progress =
-        ((90-current)/10)*100;
-
-
-    progress =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                progress
-            )
-        );
-
-
-    document.getElementById(
-        "progressBar"
-    ).style.width =
-        progress + "%";
-
-
-    document.getElementById(
-        "progressText"
-    ).textContent =
-        "Progress: " +
-        progress.toFixed(0) +
-        "% menuju 80 KG";
-
+    document.getElementById("progressBar").style.width = progress + "%";
+    document.getElementById("progressText").textContent = "Progress: " + progress.toFixed(0) + "% menuju 80 KG";
 }
 
+/* =========================
+   KALKULATOR BMI
+========================= */
+function calculateBMI() {
+    const height = parseFloat(document.getElementById("height").value);
+    const weight = parseFloat(document.getElementById("bmiWeight").value);
+
+    if (!height || !weight || height <= 0 || weight <= 0) {
+        alert("Masukkan tinggi dan berat badan yang valid.");
+        return;
+    }
+
+    const bmi = weight / ((height / 100) ** 2);
+    let category = "";
+
+    if (bmi < 18.5) {
+        category = "Kekurangan Berat Badan (Underweight)";
+    } else if (bmi < 24.9) {
+        category = "Ideal / Normal";
+    } else if (bmi < 29.9) {
+        category = "Kelebihan Berat Badan (Overweight)";
+    } else {
+        category = "Obesitas";
+    }
+
+    document.getElementById("bmiResult").innerHTML = `
+        <strong>BMI Kamu: ${bmi.toFixed(1)}</strong><br>
+        <span style="color: #16794c;">Kategori: ${category}</span>
+    `;
+}
 
 /* =========================
    RIWAYAT
 ========================= */
-
 function updateHistory() {
-
-    const history =
-        document.getElementById(
-            "history"
-        );
-
-
+    const history = document.getElementById("history");
     history.innerHTML = "";
 
+    weightData.slice().reverse().forEach((item, reverseIndex) => {
+        const index = weightData.length - 1 - reverseIndex;
+        const row = document.createElement("tr");
+        const date = new Date(item.date + "T00:00:00");
+        const formattedDate = date.toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
 
-    weightData
-    .slice()
-    .reverse()
-    .forEach(
-        (item, reverseIndex) => {
+        row.innerHTML = `
+            <td>${formattedDate}</td>
+            <td><strong>${item.weight.toFixed(1)} KG</strong></td>
+            <td>
+                <button class="delete" onclick="deleteWeight(${index})">Hapus</button>
+            </td>
+        `;
 
-            const index =
-                weightData.length -
-                1 -
-                reverseIndex;
-
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-
-            const date =
-                new Date(
-                    item.date + "T00:00:00"
-                );
-
-
-            const formattedDate =
-                date.toLocaleDateString(
-                    "id-ID",
-                    {
-                        day:"2-digit",
-                        month:"short",
-                        year:"numeric"
-                    }
-                );
-
-
-            row.innerHTML = `
-
-                <td>
-                    ${formattedDate}
-                </td>
-
-                <td>
-                    <strong>
-                        ${item.weight.toFixed(1)} KG
-                    </strong>
-                </td>
-
-                <td>
-                    <button
-                        class="delete"
-                        onclick="deleteWeight(${index})">
-                        Hapus
-                    </button>
-                </td>
-
-            `;
-
-
-            history.appendChild(row);
-
-        }
-    );
-
+        history.appendChild(row);
+    });
 }
-
 
 /* =========================
    GRAFIK
 ========================= */
-
 function drawChart() {
+    const canvas = document.getElementById("chart");
+    const ctx = canvas.getContext("2d");
 
-    const canvas =
-        document.getElementById(
-            "chart"
-        );
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const dpr = window.devicePixelRatio || 1;
 
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
 
-    const ctx =
-        canvas.getContext("2d");
-
-
-    const width =
-        canvas.clientWidth;
-
-
-    const height =
-        canvas.clientHeight;
-
-
-    const dpr =
-        window.devicePixelRatio || 1;
-
-
-    canvas.width =
-        width*dpr;
-
-
-    canvas.height =
-        height*dpr;
-
-
-    ctx.scale(
-        dpr,
-        dpr
-    );
-
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, width, height);
 
     if (weightData.length === 0) {
-
         ctx.fillStyle = "#888";
-
         ctx.textAlign = "center";
-
         ctx.font = "16px Arial";
-
-        ctx.fillText(
-            "Belum ada data. Masukkan berat badan kamu.",
-            width/2,
-            height/2
-        );
-
+        ctx.fillText("Belum ada data. Masukkan berat badan kamu.", width / 2, height / 2);
         ctx.textAlign = "left";
-
         return;
-
     }
-
 
     const padding = 45;
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
 
-    const chartWidth =
-        width - padding*2;
-
-    const chartHeight =
-        height - padding*2;
-
-
-    const values =
-        weightData.map(
-            item => item.weight
-        );
-
-
-    const max =
-        Math.max(
-            92,
-            ...values
-        );
-
-
-    const min =
-        Math.min(
-            78,
-            ...values
-        );
-
+    const values = weightData.map(item => item.weight);
+    const max = Math.max(92, ...values);
+    const min = Math.min(78, ...values);
 
     /* GRID */
-
-    ctx.strokeStyle =
-        "#e5e7eb";
-
+    ctx.strokeStyle = "#e5e7eb";
     ctx.lineWidth = 1;
 
-
-    for(let i=0;i<=5;i++){
-
-        const y =
-            padding +
-            (chartHeight/5)*i;
-
+    for (let i = 0; i <= 5; i++) {
+        const y = padding + (chartHeight / 5) * i;
 
         ctx.beginPath();
-
-        ctx.moveTo(
-            padding,
-            y
-        );
-
-        ctx.lineTo(
-            width-padding,
-            y
-        );
-
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
         ctx.stroke();
 
-
-        const label =
-            max -
-            ((max-min)/5)*i;
-
-
-        ctx.fillStyle =
-            "#777";
-
-        ctx.font =
-            "12px Arial";
-
-
-        ctx.fillText(
-            label.toFixed(0),
-            8,
-            y+4
-        );
-
+        const label = max - ((max - min) / 5) * i;
+        ctx.fillStyle = "#777";
+        ctx.font = "12px Arial";
+        ctx.fillText(label.toFixed(0), 8, y + 4);
     }
 
-
     /* TARGET 80 KG */
+    const targetY = padding + ((max - 80) / (max - min)) * chartHeight;
 
-    const targetY =
-        padding +
-        ((max-80)/(max-min))
-        *chartHeight;
-
-
-    ctx.strokeStyle =
-        "#dc3545";
-
-    ctx.setLineDash(
-        [6,5]
-    );
-
+    ctx.strokeStyle = "#dc3545";
+    ctx.setLineDash([6, 5]);
 
     ctx.beginPath();
-
-    ctx.moveTo(
-        padding,
-        targetY
-    );
-
-    ctx.lineTo(
-        width-padding,
-        targetY
-    );
-
+    ctx.moveTo(padding, targetY);
+    ctx.lineTo(width - padding, targetY);
     ctx.stroke();
-
 
     ctx.setLineDash([]);
 
-
-    ctx.fillStyle =
-        "#dc3545";
-
-    ctx.font =
-        "12px Arial";
-
-
-    ctx.fillText(
-        "TARGET 80 KG",
-        width-padding-85,
-        targetY-8
-    );
-
+    ctx.fillStyle = "#dc3545";
+    ctx.font = "12px Arial";
+    ctx.fillText("TARGET 80 KG", width - padding - 85, targetY - 8);
 
     /* GARIS DATA */
-
-    ctx.strokeStyle =
-        "#16794c";
-
+    ctx.strokeStyle = "#16794c";
     ctx.lineWidth = 3;
-
     ctx.beginPath();
 
+    values.forEach((value, index) => {
+        const x = padding + (index / Math.max(values.length - 1, 1)) * chartWidth;
+        const y = padding + ((max - value) / (max - min)) * chartHeight;
 
-    values.forEach(
-        (value,index) => {
-
-            const x =
-                padding +
-                (
-                    index /
-                    Math.max(
-                        values.length-1,
-                        1
-                    )
-                ) *
-                chartWidth;
-
-
-            const y =
-                padding +
-                (
-                    (max-value) /
-                    (max-min)
-                ) *
-                chartHeight;
-
-
-            if(index===0){
-
-                ctx.moveTo(
-                    x,
-                    y
-                );
-
-            }else{
-
-                ctx.lineTo(
-                    x,
-                    y
-                );
-
-            }
-
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
         }
-    );
-
+    });
 
     ctx.stroke();
 
+    /* TITIK DATA */
+    values.forEach((value, index) => {
+        const x = padding + (index / Math.max(values.length - 1, 1)) * chartWidth;
+        const y = padding + ((max - value) / (max - min)) * chartHeight;
 
-    /* TITIK */
-
-    values.forEach(
-        (value,index) => {
-
-            const x =
-                padding +
-                (
-                    index /
-                    Math.max(
-                        values.length-1,
-                        1
-                    )
-                ) *
-                chartWidth;
-
-
-            const y =
-                padding +
-                (
-                    (max-value) /
-                    (max-min)
-                ) *
-                chartHeight;
-
-
-            ctx.fillStyle =
-                "#16794c";
-
-
-            ctx.beginPath();
-
-            ctx.arc(
-                x,
-                y,
-                5,
-                0,
-                Math.PI*2
-            );
-
-            ctx.fill();
-
-
-            ctx.fillStyle =
-                "#222";
-
-            ctx.font =
-                "11px Arial";
-
-
-            ctx.fillText(
-                value.toFixed(1),
-                x-12,
-                y-10
-            );
-
-        }
-    );
-
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "#16794c";
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ffffff";
+        ctx.stroke();
+    });
 }
 
-
-/* =========================
-   BMI
-========================= */
-
-function calculateBMI(){
-
-    const height =
-        parseFloat(
-            document.getElementById(
-                "height"
-            ).value
-        );
-
-
-    const weight =
-        parseFloat(
-            document.getElementById(
-                "bmiWeight"
-            ).value
-        );
-
-
-    const result =
-        document.getElementById(
-            "bmiResult"
-        );
-
-
-    if(
-        !height ||
-        !weight ||
-        height <= 0 ||
-        weight <= 0
-    ){
-
-        result.textContent =
-            "Masukkan tinggi dan berat yang benar.";
-
-        return;
-
-    }
-
-
-    const heightMeter =
-        height/100;
-
-
-    const bmi =
-        weight /
-        (
-            heightMeter *
-            heightMeter
-        );
-
-
-    let category;
-
-
-    if(bmi < 18.5){
-
-        category =
-            "Berat badan kurang";
-
-    }else if(bmi < 25){
-
-        category =
-            "Normal";
-
-    }else if(bmi < 30){
-
-        category =
-            "Berat badan berlebih";
-
-    }else{
-
-        category =
-            "Obesitas";
-
-    }
-
-
-    result.innerHTML =
-
-        "<strong>BMI kamu: " +
-        bmi.toFixed(1) +
-        "</strong><br>" +
-        category;
-
-}
-
-
-/* =========================
-   UPDATE SEMUA
-========================= */
-
-function updateAll(){
-
-    updateDashboard();
-
-    updateHistory();
-
-    drawChart();
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-updateAll();
-
-
-/* RESPONSIVE */
-
-window.addEventListener(
-    "resize",
-    drawChart
-);
-
+// Re-draw chart saat ukuran layar berubah
+window.addEventListener("resize", drawChart);
 </script>
 
 </body>
