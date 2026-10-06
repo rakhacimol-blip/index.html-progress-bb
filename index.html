@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Diet Tracker</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f3f7f5;
+    color: #222;
+}
+
+header {
+    background: linear-gradient(135deg, #116b45, #25a866);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+header p {
+    opacity: .9;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 25px 18px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: -45px;
+}
+
+.stat {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.stat span {
+    display: block;
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.stat strong {
+    font-size: 25px;
+    color: #16794c;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-top: 22px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.06);
+}
+
+.card h2 {
+    color: #16794c;
+    margin-bottom: 18px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+}
+
+input {
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    font-size: 15px;
+    width: 100%;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 13px 18px;
+    background: #16794c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0e5c39;
+}
+
+.delete {
+    background: #dc3545;
+    padding: 7px 11px;
+}
+
+.progress-bg {
+    height: 25px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#16794c,#42c982);
+    transition: .5s;
+}
+
+.progress-info {
+    margin-top: 10px;
+    color: #666;
+}
+
+.chart-box {
+    width: 100%;
+    height: 380px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.bmi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+}
+
+.bmi-result {
+    margin-top: 18px;
+    padding: 18px;
+    background: #eef8f2;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #16794c;
+    color: white;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.check input {
+    width: 18px;
+    height: 18px;
+}
+
+.tips {
+    background: #fff8df;
+    border-left: 5px solid #e4a900;
+    padding: 17px;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 30px;
+    background: #116b45;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+@media(max-width:700px) {
+
+    .dashboard {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .input-grid,
+    .bmi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    .chart-box {
+        height: 300px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏃 My Diet Tracker</h1>
+    <p>Perjalanan 90 KG → 80 KG</p>
+</header>
+
+<div class="container">
+
+<!-- DASHBOARD -->
+
+<div class="dashboard">
+
+    <div class="stat">
+        <span>Berat Awal</span>
+        <strong>90 KG</strong>
+    </div>
+
+    <div class="stat">
+        <span>Target</span>
+        <strong>80 KG</strong>
+    </div>
+
+    <div class="stat">
+        <span>Berat Terakhir</span>
+        <strong id="currentWeight">90 KG</strong>
+    </div>
+
+    <div class="stat">
+        <span>Sudah Turun</span>
+        <strong id="totalLost">0 KG</strong>
+    </div>
+
+</div>
+
+
+<!-- INPUT BERAT -->
+
+<div class="card">
+
+    <h2>⚖️ Catat Berat Badan</h2>
+
+    <div class="input-grid">
+
+        <input
+            type="date"
+            id="date"
+        >
+
+        <input
+            type="number"
+            id="weight"
+            placeholder="Berat (kg)"
+            step="0.1"
+            min="1"
+        >
+
+        <button onclick="saveWeight()">
+            Simpan
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="card">
+
+    <h2>🎯 Progress 90 → 80 KG</h2>
+
+    <div class="progress-bg">
+        <div
+            class="progress-bar"
+            id="progressBar">
+        </div>
+    </div>
+
+    <p
+        class="progress-info"
+        id="progressText">
+        Progress: 0%
+    </p>
+
+</div>
+
+
+<!-- GRAFIK -->
+
+<div class="card">
+
+    <h2>📈 Grafik Perjalanan Berat</h2>
+
+    <div class="chart-box">
+
+        <canvas id="chart"></canvas>
+
+    </div>
+
+</div>
+
+
+<!-- BMI -->
+
+<div class="card">
+
+    <h2>📏 Kalkulator BMI</h2>
+
+    <div class="bmi-grid">
+
+        <input
+            type="number"
+            id="height"
+            placeholder="Tinggi badan (cm)"
+        >
+
+        <input
+            type="number"
+            id="bmiWeight"
+            placeholder="Berat badan (kg)"
+        >
+
+        <button onclick="calculateBMI()">
+            Hitung BMI
+        </button>
+
+    </div>
+
+    <div
+        class="bmi-result"
+        id="bmiResult">
+        Masukkan tinggi dan berat badan.
+    </div>
+
+</div>
+
+
+<!-- CHECKLIST -->
+
+<div class="card">
+
+    <h2>⚽ Checklist Olahraga</h2>
+
+    <label class="check">
+        <input type="checkbox">
+        Senin — Jogging / Jalan cepat 30–45 menit
+    </label>
+
+    <label class="check">
+        <input type="checkbox">
+        Selasa — Futsal / Sepak bola 60–90 menit
+    </label>
+
+    <label class="check">
+        <input type="checkbox">
+        Rabu — Jalan cepat 30–45 menit
+    </label>
+
+    <label class="check">
+        <input type="checkbox">
+        Kamis — Jogging 30–45 menit
+    </label>
+
+    <label class="check">
+        <input type="checkbox">
+        Jumat — Istirahat / jalan santai
+    </label>
+
+    <label class="check">
+        <input type="checkbox">
+        Sabtu — Futsal / Sepak bola 60–90 menit
+    </label>
+
+    <label class="check">
+        <input type="checkbox">
+        Minggu — Jogging ringan 30–45 menit
+    </label>
+
+</div>
+
+
+<!-- RIWAYAT -->
+
+<div class="card">
+
+    <h2>📋 Riwayat Berat Badan</h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Tanggal</th>
+                <th>Berat</th>
+                <th>Aksi</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="history"></tbody>
+
+    </table>
+
+</div>
+
+
+<!-- TIPS -->
+
+<div class="card">
+
+    <h2>💡 Catatan Diet</h2>
+
+    <div class="tips">
+
+        <p>
+            Jangan sengaja membuat diri kelaparan hanya untuk
+            mengejar angka di timbangan.
+        </p>
+
+        <br>
+
+        <p>
+            Fokus pada makanan sederhana seperti telur, tahu,
+            tempe, sayuran, buah, dan nasi dengan porsi yang
+            sesuai kebutuhan.
+        </p>
+
+        <br>
+
+        <p>
+            Minum air putih yang cukup dan tetap berikan tubuh
+            waktu untuk beristirahat.
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+    <h3>🔥 90 KG → 80 KG</h3>
+
+    <p>Pelan-pelan, konsisten, dan jangan menyerah.</p>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   DATA BERAT BADAN
+========================= */
+
+let weightData =
+    JSON.parse(
+        localStorage.getItem("dietWeightData")
+    ) || [];
+
+
+/* TANGGAL DEFAULT */
+
+document.getElementById("date").valueAsDate =
+    new Date();
+
+
+/* =========================
+   SIMPAN BERAT
+========================= */
+
+function saveWeight() {
+
+    const date =
+        document.getElementById("date").value;
+
+    const weight =
+        parseFloat(
+            document.getElementById("weight").value
+        );
+
+
+    if (!date || !weight || weight <= 0) {
+
+        alert(
+            "Masukkan tanggal dan berat yang benar."
+        );
+
+        return;
+    }
+
+
+    const existing =
+        weightData.findIndex(
+            item => item.date === date
+        );
+
+
+    if (existing >= 0) {
+
+        weightData[existing].weight =
+            weight;
+
+    } else {
+
+        weightData.push({
+            date: date,
+            weight: weight
+        });
+
+    }
+
+
+    weightData.sort(
+        (a,b) =>
+            new Date(a.date) -
+            new Date(b.date)
+    );
+
+
+    localStorage.setItem(
+        "dietWeightData",
+        JSON.stringify(weightData)
+    );
+
+
+    document.getElementById("weight").value = "";
+
+    updateAll();
+
+}
+
+
+/* =========================
+   HAPUS DATA
+========================= */
+
+function deleteWeight(index) {
+
+    if (
+        confirm(
+            "Yakin ingin menghapus data ini?"
+        )
+    ) {
+
+        weightData.splice(index,1);
+
+        localStorage.setItem(
+            "dietWeightData",
+            JSON.stringify(weightData)
+        );
+
+        updateAll();
+
+    }
+
+}
+
+
+/* =========================
+   UPDATE DASHBOARD
+========================= */
+
+function updateDashboard() {
+
+    let current =
+        weightData.length
+        ? weightData[weightData.length - 1].weight
+        : 90;
+
+
+    let lost =
+        Math.max(
+            0,
+            90 - current
+        );
+
+
+    document.getElementById(
+        "currentWeight"
+    ).textContent =
+        current.toFixed(1) + " KG";
+
+
+    document.getElementById(
+        "totalLost"
+    ).textContent =
+        lost.toFixed(1) + " KG";
+
+
+    let progress =
+        ((90-current)/10)*100;
+
+
+    progress =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                progress
+            )
+        );
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        progress + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        "Progress: " +
+        progress.toFixed(0) +
+        "% menuju 80 KG";
+
+}
+
+
+/* =========================
+   RIWAYAT
+========================= */
+
+function updateHistory() {
+
+    const history =
+        document.getElementById(
+            "history"
+        );
+
+
+    history.innerHTML = "";
+
+
+    weightData
+    .slice()
+    .reverse()
+    .forEach(
+        (item, reverseIndex) => {
+
+            const index =
+                weightData.length -
+                1 -
+                reverseIndex;
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const date =
+                new Date(
+                    item.date + "T00:00:00"
+                );
+
+
+            const formattedDate =
+                date.toLocaleDateString(
+                    "id-ID",
+                    {
+                        day:"2-digit",
+                        month:"short",
+                        year:"numeric"
+                    }
+                );
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${formattedDate}
+                </td>
+
+                <td>
+                    <strong>
+                        ${item.weight.toFixed(1)} KG
+                    </strong>
+                </td>
+
+                <td>
+                    <button
+                        class="delete"
+                        onclick="deleteWeight(${index})">
+                        Hapus
+                    </button>
+                </td>
+
+            `;
+
+
+            history.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =========================
+   GRAFIK
+========================= */
+
+function drawChart() {
+
+    const canvas =
+        document.getElementById(
+            "chart"
+        );
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const width =
+        canvas.clientWidth;
+
+
+    const height =
+        canvas.clientHeight;
+
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        width*dpr;
+
+
+    canvas.height =
+        height*dpr;
+
+
+    ctx.scale(
+        dpr,
+        dpr
+    );
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    if (weightData.length === 0) {
+
+        ctx.fillStyle = "#888";
+
+        ctx.textAlign = "center";
+
+        ctx.font = "16px Arial";
+
+        ctx.fillText(
+            "Belum ada data. Masukkan berat badan kamu.",
+            width/2,
+            height/2
+        );
+
+        ctx.textAlign = "left";
+
+        return;
+
+    }
+
+
+    const padding = 45;
+
+    const chartWidth =
+        width - padding*2;
+
+    const chartHeight =
+        height - padding*2;
+
+
+    const values =
+        weightData.map(
+            item => item.weight
+        );
+
+
+    const max =
+        Math.max(
+            92,
+            ...values
+        );
+
+
+    const min =
+        Math.min(
+            78,
+            ...values
+        );
+
+
+    /* GRID */
+
+    ctx.strokeStyle =
+        "#e5e7eb";
+
+    ctx.lineWidth = 1;
+
+
+    for(let i=0;i<=5;i++){
+
+        const y =
+            padding +
+            (chartHeight/5)*i;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            padding,
+            y
+        );
+
+        ctx.lineTo(
+            width-padding,
+            y
+        );
+
+        ctx.stroke();
+
+
+        const label =
+            max -
+            ((max-min)/5)*i;
+
+
+        ctx.fillStyle =
+            "#777";
+
+        ctx.font =
+            "12px Arial";
+
+
+        ctx.fillText(
+            label.toFixed(0),
+            8,
+            y+4
+        );
+
+    }
+
+
+    /* TARGET 80 KG */
+
+    const targetY =
+        padding +
+        ((max-80)/(max-min))
+        *chartHeight;
+
+
+    ctx.strokeStyle =
+        "#dc3545";
+
+    ctx.setLineDash(
+        [6,5]
+    );
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        padding,
+        targetY
+    );
+
+    ctx.lineTo(
+        width-padding,
+        targetY
+    );
+
+    ctx.stroke();
+
+
+    ctx.setLineDash([]);
+
+
+    ctx.fillStyle =
+        "#dc3545";
+
+    ctx.font =
+        "12px Arial";
+
+
+    ctx.fillText(
+        "TARGET 80 KG",
+        width-padding-85,
+        targetY-8
+    );
+
+
+    /* GARIS DATA */
+
+    ctx.strokeStyle =
+        "#16794c";
+
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+
+    values.forEach(
+        (value,index) => {
+
+            const x =
+                padding +
+                (
+                    index /
+                    Math.max(
+                        values.length-1,
+                        1
+                    )
+                ) *
+                chartWidth;
+
+
+            const y =
+                padding +
+                (
+                    (max-value) /
+                    (max-min)
+                ) *
+                chartHeight;
+
+
+            if(index===0){
+
+                ctx.moveTo(
+                    x,
+                    y
+                );
+
+            }else{
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+            }
+
+        }
+    );
+
+
+    ctx.stroke();
+
+
+    /* TITIK */
+
+    values.forEach(
+        (value,index) => {
+
+            const x =
+                padding +
+                (
+                    index /
+                    Math.max(
+                        values.length-1,
+                        1
+                    )
+                ) *
+                chartWidth;
+
+
+            const y =
+                padding +
+                (
+                    (max-value) /
+                    (max-min)
+                ) *
+                chartHeight;
+
+
+            ctx.fillStyle =
+                "#16794c";
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                5,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+
+
+            ctx.fillStyle =
+                "#222";
+
+            ctx.font =
+                "11px Arial";
+
+
+            ctx.fillText(
+                value.toFixed(1),
+                x-12,
+                y-10
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   BMI
+========================= */
+
+function calculateBMI(){
+
+    const height =
+        parseFloat(
+            document.getElementById(
+                "height"
+            ).value
+        );
+
+
+    const weight =
+        parseFloat(
+            document.getElementById(
+                "bmiWeight"
+            ).value
+        );
+
+
+    const result =
+        document.getElementById(
+            "bmiResult"
+        );
+
+
+    if(
+        !height ||
+        !weight ||
+        height <= 0 ||
+        weight <= 0
+    ){
+
+        result.textContent =
+            "Masukkan tinggi dan berat yang benar.";
+
+        return;
+
+    }
+
+
+    const heightMeter =
+        height/100;
+
+
+    const bmi =
+        weight /
+        (
+            heightMeter *
+            heightMeter
+        );
+
+
+    let category;
+
+
+    if(bmi < 18.5){
+
+        category =
+            "Berat badan kurang";
+
+    }else if(bmi < 25){
+
+        category =
+            "Normal";
+
+    }else if(bmi < 30){
+
+        category =
+            "Berat badan berlebih";
+
+    }else{
+
+        category =
+            "Obesitas";
+
+    }
+
+
+    result.innerHTML =
+
+        "<strong>BMI kamu: " +
+        bmi.toFixed(1) +
+        "</strong><br>" +
+        category;
+
+}
+
+
+/* =========================
+   UPDATE SEMUA
+========================= */
+
+function updateAll(){
+
+    updateDashboard();
+
+    updateHistory();
+
+    drawChart();
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+updateAll();
+
+
+/* RESPONSIVE */
+
+window.addEventListener(
+    "resize",
+    drawChart
+);
+
+</script>
+
+</body>
+</html>
