@@ -3,287 +3,436 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Diet Tracker</title>
+<title>DietTracker Pro — Personal Fitness Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+:root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --primary-light: #d1fae5;
+    --accent: #f59e0b;
+    --danger: #ef4444;
+    --bg-main: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background: #f3f7f5;
-    color: #222;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+/* Background Glowing Orbs Animation */
+.bg-glow-1, .bg-glow-2 {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.35;
+    animation: float 12s infinite alternate ease-in-out;
+}
+.bg-glow-1 {
+    width: 400px;
+    height: 400px;
+    background: #059669;
+    top: -100px;
+    left: -100px;
+}
+.bg-glow-2 {
+    width: 350px;
+    height: 350px;
+    background: #3b82f6;
+    bottom: 10%;
+    right: -50px;
+    animation-delay: -6s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 40px) scale(1.15); }
 }
 
 header {
-    background: linear-gradient(135deg, #116b45, #25a866);
-    color: white;
-    padding: 40px 20px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 30px 20px 60px;
     text-align: center;
+    position: relative;
 }
 
 header h1 {
     font-size: 32px;
-    margin-bottom: 8px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #34d399, #10b981, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
 }
 
 header p {
-    opacity: .9;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 6px;
+    font-weight: 500;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 960px;
     margin: auto;
-    padding: 25px 18px;
+    padding: 0 20px;
 }
 
+/* Dashboard Cards */
 .dashboard {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-top: -45px;
+    gap: 16px;
+    margin-top: -35px;
+    position: relative;
+    z-index: 10;
 }
 
-.stat {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
+.stat-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    padding: 20px 16px;
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.stat span {
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 25px 30px -5px rgba(16, 185, 129, 0.15);
+}
+
+.stat-card span {
     display: block;
-    color: #777;
-    font-size: 13px;
-    margin-bottom: 7px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
 }
 
-.stat strong {
-    font-size: 25px;
-    color: #16794c;
+.stat-card strong {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--primary);
 }
 
+/* Base Card Style */
 .card {
-    background: white;
-    padding: 25px;
-    margin-top: 22px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.06);
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    padding: 28px;
+    margin-top: 24px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .card h2 {
-    color: #16794c;
-    margin-bottom: 18px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.input-grid {
+/* Inputs & Buttons */
+.input-grid, .bmi-grid {
     display: grid;
     grid-template-columns: 1fr 1fr auto;
     gap: 12px;
 }
 
 input {
-    padding: 13px;
-    border: 1px solid #ddd;
-    border-radius: 9px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    padding: 14px 18px;
+    border-radius: 14px;
     font-size: 15px;
-    width: 100%;
+    color: #fff;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    background: rgba(15, 23, 42, 0.9);
 }
 
 button {
     border: none;
-    border-radius: 9px;
-    padding: 13px 18px;
-    background: #16794c;
+    border-radius: 14px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 15px;
     cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 button:hover {
-    background: #0e5c39;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    filter: brightness(1.1);
 }
 
-.delete {
-    background: #dc3545;
-    padding: 7px 11px;
+button:active {
+    transform: translateY(0);
 }
 
+.btn-danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 8px 14px;
+    font-size: 13px;
+    box-shadow: none;
+}
+
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.3);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Progress Bar */
 .progress-bg {
-    height: 25px;
-    background: #e5e7eb;
-    border-radius: 20px;
+    height: 18px;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 30px;
     overflow: hidden;
+    padding: 3px;
+    border: 1px solid var(--border-color);
 }
 
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg,#16794c,#42c982);
-    transition: .5s;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    border-radius: 30px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
 }
 
 .progress-info {
-    margin-top: 10px;
-    color: #666;
-}
-
-.chart-box {
-    width: 100%;
-    height: 380px;
-}
-
-canvas {
-    width: 100%;
-    height: 100%;
-}
-
-.bmi-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 12px;
-}
-
-.bmi-result {
-    margin-top: 18px;
-    padding: 18px;
-    background: #eef8f2;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 18px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
-}
-
-th {
-    background: #16794c;
-    color: white;
-}
-
-.check {
+    margin-top: 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
     display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+    justify-content: space-between;
 }
 
-.check input {
-    width: 18px;
-    height: 18px;
-}
-
-.tips {
-    background: #fff8df;
-    border-left: 5px solid #e4a900;
-    padding: 17px;
-    border-radius: 8px;
-}
-
+/* Meal Cards */
 .extreme-badge {
-    background: #dc3545;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: bold;
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .meal-plan-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-top: 15px;
+    gap: 16px;
+    margin-top: 16px;
 }
 
 .meal-card {
-    background: #f8faf9;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 15px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 18px;
+    transition: all 0.3s ease;
+}
+
+.meal-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(15, 23, 42, 0.7);
 }
 
 .meal-card h3 {
-    color: #16794c;
-    font-size: 16px;
-    margin-bottom: 8px;
-    border-bottom: 2px solid #25a866;
-    padding-bottom: 4px;
+    color: var(--primary);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .meal-card p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.meal-card .calorie-tag {
+    font-size: 12px;
+    color: #34d399;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
     font-size: 14px;
-    color: #444;
-    line-height: 1.4;
+}
+
+th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+td {
+    color: var(--text-primary);
 }
 
 .budget-summary {
-    background: #eef8f2;
-    border: 1px dashed #16794c;
-    padding: 15px;
-    border-radius: 10px;
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px dashed rgba(16, 185, 129, 0.3);
+    padding: 20px;
+    border-radius: 18px;
     margin-top: 20px;
 }
 
-.budget-summary h3 {
-    color: #116b45;
-    margin-bottom: 10px;
+.warning-box {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid var(--danger);
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 20px;
+    color: #fca5a5;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
-.warning-box {
-    background: #fde8e8;
-    border-left: 5px solid #dc3545;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 15px;
-    color: #721c24;
+/* Checkboxes */
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.check-item:hover {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.check-item input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.check-item input[type="checkbox"]:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.check-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
     font-size: 13px;
+    font-weight: bold;
+    top: -2px;
+    left: 3px;
+}
+
+.check-item.completed {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+/* Chart Canvas */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    margin-top: 10px;
 }
 
 footer {
-    margin-top: 30px;
-    background: #116b45;
-    color: white;
     text-align: center;
-    padding: 25px;
+    margin-top: 50px;
+    color: var(--text-secondary);
+    font-size: 13px;
 }
 
-@media(max-width:700px) {
+@media(max-width: 768px) {
     .dashboard {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
-
-    .input-grid,
-    .bmi-grid,
-    .meal-plan-grid {
+    .input-grid, .bmi-grid, .meal-plan-grid {
         grid-template-columns: 1fr;
-    }
-
-    header h1 {
-        font-size: 26px;
-    }
-
-    .chart-box {
-        height: 300px;
-    }
-
-    table {
-        font-size: 13px;
     }
 }
 </style>
@@ -291,100 +440,104 @@ footer {
 
 <body>
 
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+
 <header>
-    <h1>🏃 My Diet Tracker</h1>
-    <p>Perjalanan 90 KG → 80 KG</p>
+    <h1>DietTracker Pro</h1>
+    <p>Target Perjalanan: 90 KG → 80 KG</p>
 </header>
 
 <div class="container">
 
 <!-- DASHBOARD -->
 <div class="dashboard">
-    <div class="stat">
+    <div class="stat-card">
         <span>Berat Awal</span>
-        <strong>90 KG</strong>
+        <strong>90.0 <small style="font-size: 14px;">KG</small></strong>
     </div>
 
-    <div class="stat">
+    <div class="stat-card">
         <span>Target</span>
-        <strong>80 KG</strong>
+        <strong>80.0 <small style="font-size: 14px;">KG</small></strong>
     </div>
 
-    <div class="stat">
-        <span>Berat Terakhir</span>
-        <strong id="currentWeight">90 KG</strong>
+    <div class="stat-card">
+        <span>Saat Ini</span>
+        <strong id="currentWeight">90.0 <small style="font-size: 14px;">KG</small></strong>
     </div>
 
-    <div class="stat">
-        <span>Sudah Turun</span>
-        <strong id="totalLost">0 KG</strong>
+    <div class="stat-card">
+        <span>Total Turun</span>
+        <strong id="totalLost" style="color: #34d399;">0.0 <small style="font-size: 14px;">KG</small></strong>
     </div>
 </div>
 
-<!-- INPUT BERAT -->
+<!-- INPUT BERAT BADAN -->
 <div class="card">
-    <h2>⚖️ Catat Berat Badan</h2>
+    <h2>⚖️ Catat Progress Harian</h2>
     <div class="input-grid">
         <input type="date" id="date">
-        <input type="number" id="weight" placeholder="Berat (kg)" step="0.1" min="1">
-        <button onclick="saveWeight()">Simpan</button>
+        <input type="number" id="weight" placeholder="Berat Badan (KG)" step="0.1">
+        <button onclick="saveWeightWithSFX()">Simpan Data</button>
     </div>
 </div>
 
-<!-- PROGRESS -->
+<!-- PROGRESS BAR -->
 <div class="card">
-    <h2>🎯 Progress 90 → 80 KG</h2>
+    <h2>🎯 Capaian Target</h2>
     <div class="progress-bg">
         <div class="progress-bar" id="progressBar"></div>
     </div>
-    <p class="progress-info" id="progressText">Progress: 0%</p>
+    <div class="progress-info">
+        <span id="progressText">Progress: 0%</span>
+        <span>Sisa: <strong id="remainingWeight" style="color: #fff;">10.0 KG</strong></span>
+    </div>
 </div>
 
-<!-- MENU DIET EKSTREM 1 MINGGU TANPA BERAS -->
+<!-- MENU DIET EKSTREM -->
 <div class="card">
-    <span class="extreme-badge">🔥 BUDGET SUPER HEMAT (1 MINGGU)</span>
-    <h2>🍳 Menu Diet Ekstrem 1 Minggu (&lt; Rp37.000 / Minggu)</h2>
-    <p style="color: #666; font-size: 14px;">Pola makan tinggi protein dan serat tanpa karbohidrat beras untuk defisit kalori cepat.</p>
+    <span class="extreme-badge">⚡ Ultra Budget Plan</span>
+    <h2>🍳 Menu Diet 1 Minggu (Tanpa Beras)</h2>
+    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Tinggi protein & serat untuk defisit kalori maksimal tanpa rasa lapar berlebih.</p>
 
     <div class="meal-plan-grid">
         <div class="meal-card">
             <h3>🌅 Sarapan</h3>
-            <p><strong>2 Butir Telur Rebus</strong></p>
-            <p>+ Air Hangat / Teh Tawar / Kopi Tanpa Gula</p>
-            <p style="font-size: 12px; color: #777; margin-top: 5px;">~140 Kalori | Protein Tinggi</p>
+            <p>2 Butir Telur Rebus</p>
+            <p>Air Hangat / Kopi Hitam Tanpa Gula</p>
+            <div class="calorie-tag">~140 kcal</div>
         </div>
 
         <div class="meal-card">
             <h3>☀️ Makan Siang</h3>
-            <p><strong>1 Kotak Tempe / Tahu Kukus</strong> (~150 gram)</p>
-            <p>+ 1 Mangkok Sayur Rebus (Kangkung / Bayam / Sawi)</p>
-            <p style="font-size: 12px; color: #777; margin-top: 5px;">~200 Kalori | Serat & Protein Nabati</p>
+            <p>1 Kotak Tempe / Tahu Kukus (150g)</p>
+            <p>1 Mangkok Sayur Rebus (Kangkung/Bayam)</p>
+            <div class="calorie-tag">~200 kcal</div>
         </div>
 
         <div class="meal-card">
             <h3>🌙 Makan Malam</h3>
-            <p><strong>1 Butir Telur Rebus</strong></p>
-            <p>+ Rebusan Sawi / Kangkung</p>
-            <p><em>Makan sebelum jam 19.00 WIB</em></p>
-            <p style="font-size: 12px; color: #777; margin-top: 5px;">~100 Kalori | Bebas Karbohidrat Malam</p>
+            <p>1 Butir Telur Rebus</p>
+            <p>Rebusan Sawi Hijau / Kangkung</p>
+            <div class="calorie-tag">~100 kcal</div>
         </div>
     </div>
 
-    <!-- RINCIAN BUDGET 1 MINGGU -->
     <div class="budget-summary">
-        <h3>💰 Rincian Belanja Bahan 1 Minggu (Tanpa Beras)</h3>
+        <h3 style="color: var(--primary); font-size: 16px; margin-bottom: 12px;">💰 Estimasi Belanja Mingguan</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Bahan Makanan</th>
-                    <th>Kebutuhan (7 Hari)</th>
-                    <th>Estimasi Harga</th>
+                    <th>Bahan</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Telur Ayam Pasar</td>
-                    <td>21 Butir (~1.3 KG)</td>
+                    <td>21 Butir (~1.3 kg)</td>
                     <td>Rp 21.000</td>
                 </tr>
                 <tr>
@@ -393,93 +546,126 @@ footer {
                     <td>Rp 10.500</td>
                 </tr>
                 <tr>
-                    <td>Sayuran (Kangkung/Bayam/Sawi)</td>
-                    <td>5 Ikat (Pasar Tradisional)</td>
+                    <td>Sayuran Segar</td>
+                    <td>5 Ikat (Kangkung/Bayam)</td>
                     <td>Rp 5.000</td>
                 </tr>
                 <tr>
-                    <td colspan="2"><strong>TOTAL MAKSIMAL 1 MINGGU</strong></td>
-                    <td><strong style="color: #16794c;">Rp 36.500 / Minggu</strong></td>
+                    <td colspan="2"><strong>Maksimal Biaya Mingguan</strong></td>
+                    <td><strong style="color: #34d399;">Rp 36.500</strong></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     <div class="warning-box">
-        ⚠️ <strong>Peringatan Kesehatan:</strong> Diet tanpa karbohidrat ini termasuk defisit ekstrem. Selalu minum air putih yang banyak (minimal 3 Liter sehari). Jika terasa lemas berlebihan atau pusing, segera konsumsi makanan berkarbohidrat sedang.
+        ⚠️ <strong>Catatan Penting:</strong> Pola makan ini memiliki defisit kalori cukup tinggi. Pastikan minum air putih minimal 3 liter/hari agar terhindar dari dehidrasi dan pusing.
     </div>
 </div>
 
-<!-- GRAFIK -->
+<!-- GRAFIK PERJALANAN BERAT -->
 <div class="card">
-    <h2>📈 Grafik Perjalanan Berat</h2>
-    <div class="chart-box">
+    <h2>📈 Grafik Perjalanan</h2>
+    <div class="chart-container">
         <canvas id="chart"></canvas>
     </div>
 </div>
 
-<!-- BMI -->
+<!-- KALKULATOR BMI -->
 <div class="card">
     <h2>📏 Kalkulator BMI</h2>
     <div class="bmi-grid">
-        <input type="number" id="height" placeholder="Tinggi badan (cm)">
-        <input type="number" id="bmiWeight" placeholder="Berat badan (kg)">
-        <button onclick="calculateBMI()">Hitung BMI</button>
+        <input type="number" id="height" placeholder="Tinggi (cm)">
+        <input type="number" id="bmiWeight" placeholder="Berat (kg)">
+        <button onclick="calculateBMIWithSFX()">Hitung BMI</button>
     </div>
-    <div class="bmi-result" id="bmiResult">
-        Masukkan tinggi dan berat badan.
+    <div id="bmiResult" style="margin-top: 16px; font-weight: 600; text-align: center; color: var(--primary);"></div>
+</div>
+
+<!-- CHECKLIST OLAHRAGA -->
+<div class="card">
+    <h2>⚽ Jurnal Olahraga Mingguan</h2>
+    <div id="workoutList">
+        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> <span>Senin — Jogging / Jalan cepat 30–45 menit</span></label>
+        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> <span>Selasa — Futsal / Sepak bola 60–90 menit</span></label>
+        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> <span>Rabu — Jalan cepat / Rest aktif 30 menit</span></label>
+        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> <span>Kamis — Jogging 30–45 menit</span></label>
+        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> <span>Jumat — Istirahat total / Stretching</span></label>
+        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> <span>Sabtu — Futsal / Sepak bola 60–90 menit</span></label>
+        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> <span>Minggu — Jogging santai 30 menit</span></label>
     </div>
 </div>
 
-<!-- CHECKLIST -->
+<!-- RIWAYAT DATA -->
 <div class="card">
-    <h2>⚽ Checklist Olahraga</h2>
-    <label class="check"><input type="checkbox"> Senin — Jogging / Jalan cepat 30–45 menit</label>
-    <label class="check"><input type="checkbox"> Selasa — Futsal / Sepak bola 60–90 menit</label>
-    <label class="check"><input type="checkbox"> Rabu — Jalan cepat 30–45 menit</label>
-    <label class="check"><input type="checkbox"> Kamis — Jogging 30–45 menit</label>
-    <label class="check"><input type="checkbox"> Jumat — Istirahat / jalan santai</label>
-    <label class="check"><input type="checkbox"> Sabtu — Futsal / Sepak bola 60–90 menit</label>
-    <label class="check"><input type="checkbox"> Minggu — Jogging ringan 30–45 menit</label>
-</div>
-
-<!-- RIWAYAT -->
-<div class="card">
-    <h2>📋 Riwayat Berat Badan</h2>
+    <h2>📋 Riwayat Catatan</h2>
     <table>
         <thead>
             <tr>
                 <th>Tanggal</th>
-                <th>Berat</th>
-                <th>Aksi</th>
+                <th>Berat (KG)</th>
+                <th style="text-align: right;">Aksi</th>
             </tr>
         </thead>
         <tbody id="history"></tbody>
     </table>
 </div>
 
-<!-- TIPS -->
-<div class="card">
-    <h2>💡 Catatan Diet</h2>
-    <div class="tips">
-        <p>Jangan sengaja membuat diri kelaparan hanya untuk mengejar angka di timbangan.</p>
-        <br>
-        <p>Fokus pada makanan sederhana seperti telur, tahu, tempe, sayuran, buah, dan nasi dengan porsi yang sesuai kebutuhan.</p>
-        <br>
-        <p>Minum air putih yang cukup dan tetap berikan tubuh waktu untuk beristirahat.</p>
-    </div>
-</div>
-
 </div>
 
 <footer>
-    <h3>🔥 90 KG → 80 KG</h3>
-    <p>Pelan-pelan, konsisten, dan jangan menyerah.</p>
+    <p>DietTracker Pro • Tetap Konsisten & Jaga Kesehatan</p>
 </footer>
 
 <script>
-let weightData = JSON.parse(localStorage.getItem("dietWeightData")) || [];
+/* ==========================================
+   SOUND FX ENGINE (Web Audio API - No External Files)
+========================================== */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+function playSound(type) {
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+
+    if (type === 'click') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(200, now + 0.08);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+    } else if (type === 'success') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(880, now + 0.1);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+    } else if (type === 'delete') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.linearRampToValueAtTime(100, now + 0.12);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+    }
+}
+
+/* ==========================================
+   DATA MANAGEMENT & STATE
+========================================== */
+let weightData = JSON.parse(localStorage.getItem("dietWeightData")) || [];
 document.getElementById("date").valueAsDate = new Date();
 
 window.onload = function() {
@@ -492,14 +678,20 @@ function updateAll() {
     drawChart();
 }
 
+function saveWeightWithSFX() {
+    saveWeight();
+}
+
 function saveWeight() {
     const date = document.getElementById("date").value;
     const weight = parseFloat(document.getElementById("weight").value);
 
     if (!date || isNaN(weight) || weight <= 0) {
-        alert("Masukkan tanggal dan berat yang benar.");
+        alert("Masukkan tanggal dan berat badan yang valid.");
         return;
     }
+
+    playSound('success');
 
     const existing = weightData.findIndex(item => item.date === date);
 
@@ -517,8 +709,9 @@ function saveWeight() {
 }
 
 function deleteWeight(index) {
-    if (confirm("Yakin ingin menghapus data ini?")) {
-        weightData.splice(index,1);
+    playSound('delete');
+    if (confirm("Hapus data catatan ini?")) {
+        weightData.splice(index, 1);
         localStorage.setItem("dietWeightData", JSON.stringify(weightData));
         updateAll();
     }
@@ -527,15 +720,22 @@ function deleteWeight(index) {
 function updateDashboard() {
     let current = weightData.length ? weightData[weightData.length - 1].weight : 90;
     let lost = Math.max(0, 90 - current);
+    let remaining = Math.max(0, current - 80);
 
-    document.getElementById("currentWeight").textContent = current.toFixed(1) + " KG";
-    document.getElementById("totalLost").textContent = lost.toFixed(1) + " KG";
+    document.getElementById("currentWeight").innerHTML = `${current.toFixed(1)} <small style="font-size: 14px;">KG</small>`;
+    document.getElementById("totalLost").innerHTML = `${lost.toFixed(1)} <small style="font-size: 14px;">KG</small>`;
+    document.getElementById("remainingWeight").textContent = `${remaining.toFixed(1)} KG`;
 
     let progress = ((90 - current) / 10) * 100;
     progress = Math.max(0, Math.min(100, progress));
 
     document.getElementById("progressBar").style.width = progress + "%";
-    document.getElementById("progressText").textContent = "Progress: " + progress.toFixed(0) + "% menuju 80 KG";
+    document.getElementById("progressText").textContent = `Progress: ${progress.toFixed(0)}% menuju 80 KG`;
+}
+
+function calculateBMIWithSFX() {
+    playSound('click');
+    calculateBMI();
 }
 
 function calculateBMI() {
@@ -550,20 +750,21 @@ function calculateBMI() {
     const bmi = weight / ((height / 100) ** 2);
     let category = "";
 
-    if (bmi < 18.5) {
-        category = "Kekurangan Berat Badan (Underweight)";
-    } else if (bmi < 24.9) {
-        category = "Ideal / Normal";
-    } else if (bmi < 29.9) {
-        category = "Kelebihan Berat Badan (Overweight)";
-    } else {
-        category = "Obesitas";
-    }
+    if (bmi < 18.5) category = "Kekurangan Berat Badan";
+    else if (bmi < 24.9) category = "Ideal / Normal";
+    else if (bmi < 29.9) category = "Kelebihan Berat Badan";
+    else category = "Obesitas";
 
-    document.getElementById("bmiResult").innerHTML = `
-        <strong>BMI Kamu: ${bmi.toFixed(1)}</strong><br>
-        <span style="color: #16794c;">Kategori: ${category}</span>
-    `;
+    document.getElementById("bmiResult").innerHTML = `BMI Anda: ${bmi.toFixed(1)} — <span style="color: #34d399">${category}</span>`;
+}
+
+function toggleCheck(el) {
+    playSound('click');
+    if (el.checked) {
+        el.parentElement.classList.add('completed');
+    } else {
+        el.parentElement.classList.remove('completed');
+    }
 }
 
 function updateHistory() {
@@ -574,17 +775,13 @@ function updateHistory() {
         const index = weightData.length - 1 - reverseIndex;
         const row = document.createElement("tr");
         const date = new Date(item.date + "T00:00:00");
-        const formattedDate = date.toLocaleDateString("id-ID", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        });
+        const formattedDate = date.toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" });
 
         row.innerHTML = `
             <td>${formattedDate}</td>
             <td><strong>${item.weight.toFixed(1)} KG</strong></td>
-            <td>
-                <button class="delete" onclick="deleteWeight(${index})">Hapus</button>
+            <td style="text-align: right;">
+                <button class="btn-danger" onclick="deleteWeight(${index})">Hapus</button>
             </td>
         `;
 
@@ -592,97 +789,93 @@ function updateHistory() {
     });
 }
 
+/* ==========================================
+   CANVAS CHART ENGINE
+========================================== */
 function drawChart() {
     const canvas = document.getElementById("chart");
     const ctx = canvas.getContext("2d");
 
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
+    const width = canvas.parentElement.clientWidth;
+    const height = canvas.parentElement.clientHeight;
     const dpr = window.devicePixelRatio || 1;
 
     canvas.width = width * dpr;
     canvas.height = height * dpr;
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
 
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, width, height);
 
     if (weightData.length === 0) {
-        ctx.fillStyle = "#888";
+        ctx.fillStyle = "#94a3b8";
         ctx.textAlign = "center";
-        ctx.font = "16px Arial";
-        ctx.fillText("Belum ada data. Masukkan berat badan kamu.", width / 2, height / 2);
-        ctx.textAlign = "left";
+        ctx.font = "500 14px 'Plus Jakarta Sans'";
+        ctx.fillText("Belum ada riwayat. Masukkan berat badan pertama Anda.", width / 2, height / 2);
         return;
     }
 
-    const padding = 45;
-    const chartWidth = width - padding * 2;
-    const chartHeight = height - padding * 2;
+    const padding = 40;
+    const chartW = width - padding * 2;
+    const chartH = height - padding * 2;
 
     const values = weightData.map(item => item.weight);
     const max = Math.max(92, ...values);
     const min = Math.min(78, ...values);
 
-    ctx.strokeStyle = "#e5e7eb";
+    /* Grid Lines */
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
     ctx.lineWidth = 1;
 
-    for (let i = 0; i <= 5; i++) {
-        const y = padding + (chartHeight / 5) * i;
-
+    for (let i = 0; i <= 4; i++) {
+        const y = padding + (chartH / 4) * i;
         ctx.beginPath();
         ctx.moveTo(padding, y);
         ctx.lineTo(width - padding, y);
         ctx.stroke();
 
-        const label = max - ((max - min) / 5) * i;
-        ctx.fillStyle = "#777";
-        ctx.font = "12px Arial";
-        ctx.fillText(label.toFixed(0), 8, y + 4);
+        const val = max - ((max - min) / 4) * i;
+        ctx.fillStyle = "#64748b";
+        ctx.font = "11px 'Plus Jakarta Sans'";
+        ctx.fillText(val.toFixed(0) + " kg", 5, y + 4);
     }
 
-    const targetY = padding + ((max - 80) / (max - min)) * chartHeight;
-
-    ctx.strokeStyle = "#dc3545";
-    ctx.setLineDash([6, 5]);
-
-    ctx.beginPath();
-    ctx.moveTo(padding, targetY);
-    ctx.lineTo(width - padding, targetY);
-    ctx.stroke();
-
-    ctx.setLineDash([]);
-
-    ctx.fillStyle = "#dc3545";
-    ctx.font = "12px Arial";
-    ctx.fillText("TARGET 80 KG", width - padding - 85, targetY - 8);
-
-    ctx.strokeStyle = "#16794c";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-
-    values.forEach((value, index) => {
-        const x = padding + (index / Math.max(values.length - 1, 1)) * chartWidth;
-        const y = padding + ((max - value) / (max - min)) * chartHeight;
-
-        if (index === 0) {
-            ctx.moveTo(x, y);
-        } else {
-            ctx.lineTo(x, y);
-        }
+    /* Line & Gradient Area */
+    const points = values.map((val, idx) => {
+        const x = padding + (idx / Math.max(values.length - 1, 1)) * chartW;
+        const y = padding + ((max - val) / (max - min)) * chartH;
+        return { x, y };
     });
 
+    const grad = ctx.createLinearGradient(0, padding, 0, height - padding);
+    grad.addColorStop(0, "rgba(16, 185, 129, 0.25)");
+    grad.addColorStop(1, "rgba(16, 185, 129, 0.0)");
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    points.forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.lineTo(points[points.length - 1].x, height - padding);
+    ctx.lineTo(points[0].x, height - padding);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    points.forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.strokeStyle = "#10b981";
+    ctx.lineWidth = 3;
     ctx.stroke();
 
-    values.forEach((value, index) => {
-        const x = padding + (index / Math.max(values.length - 1, 1)) * chartWidth;
-        const y = padding + ((max - value) / (max - min)) * chartHeight;
-
+    /* Points */
+    points.forEach(p => {
         ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = "#16794c";
+        ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "#10b981";
         ctx.fill();
+        ctx.strokeStyle = "#0f172a";
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "#ffffff";
         ctx.stroke();
     });
 }
