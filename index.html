@@ -193,6 +193,69 @@ th {
     border-radius: 8px;
 }
 
+/* DESAIN FITUR DIET EKSTREM */
+.extreme-badge {
+    background: #dc3545;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.meal-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.meal-card {
+    background: #f8faf9;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.meal-card h3 {
+    color: #16794c;
+    font-size: 16px;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #25a866;
+    padding-bottom: 4px;
+}
+
+.meal-card p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.4;
+}
+
+.budget-summary {
+    background: #eef8f2;
+    border: 1px dashed #16794c;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.budget-summary h3 {
+    color: #116b45;
+    margin-bottom: 10px;
+}
+
+.warning-box {
+    background: #fde8e8;
+    border-left: 5px solid #dc3545;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    color: #721c24;
+    font-size: 13px;
+}
+
 footer {
     margin-top: 30px;
     background: #116b45;
@@ -207,7 +270,8 @@ footer {
     }
 
     .input-grid,
-    .bmi-grid {
+    .bmi-grid,
+    .meal-plan-grid {
         grid-template-columns: 1fr;
     }
 
@@ -260,7 +324,7 @@ footer {
 
 <!-- INPUT BERAT -->
 <div class="card">
-    <h2>⚖️️ Catat Berat Badan</h2>
+    <h2>⚖️ Catat Berat Badan</h2>
     <div class="input-grid">
         <input type="date" id="date">
         <input type="number" id="weight" placeholder="Berat (kg)" step="0.1" min="1">
@@ -275,6 +339,82 @@ footer {
         <div class="progress-bar" id="progressBar"></div>
     </div>
     <p class="progress-info" id="progressText">Progress: 0%</p>
+</div>
+
+<!-- FITUR BARU: MENU DIET EKSTREM ANAK KOST -->
+<div class="card">
+    <span class="extreme-badge">🔥 BUDGET SUPER HEMAT</span>
+    <h2>🍳 Menu Diet Ekstrem Anak Kost (&lt; Rp200.000 / Bulan)</h2>
+    <p style="color: #666; font-size: 14px;">Pola makan tinggi protein, rendah karbohidrat, dan defisit kalori ekstrem dengan bahan lokal murah.</p>
+
+    <div class="meal-plan-grid">
+        <div class="meal-card">
+            <h3>🌅 Sarapan</h3>
+            <p><strong>2 Butir Telur Rebus</strong></p>
+            <p>+ 1 Cangkir Air Hangat / Teh Tawar / Kopi Tanpa Gula</p>
+            <p style="font-size: 12px; color: #777; margin-top: 5px;">~140 Kalori | Sumber Protein & Lemak Baik</p>
+        </div>
+
+        <div class="meal-card">
+            <h3>☀️ Makan Siang</h3>
+            <p><strong>1 Kotak Tempe / Tahu Kukus/Rebus</strong> (150-200 gram)</p>
+            <p>+ 1 Mangkok Sayur Rebus (Bayam / Kangkung / Sawi)</p>
+            <p>+ ½ Centong Nasi Putih / Tanpa Nasi</p>
+            <p style="font-size: 12px; color: #777; margin-top: 5px;">~300 Kalori | Protein & Serat Tinggi</p>
+        </div>
+
+        <div class="meal-card">
+            <h3>🌙 Makan Malam</h3>
+            <p><strong>1 Butir Telur Rebus / Dadar Tanpa Minyak</strong></p>
+            <p>+ Rebusan Sawi / Kangkung</p>
+            <p><em>Makan sebelum jam 19.00 WIB</em></p>
+            <p style="font-size: 12px; color: #777; margin-top: 5px;">~120 Kalori | Mencegah Penumpukan Lemak Malam</p>
+        </div>
+    </div>
+
+    <!-- RINCIAN BUDGET -->
+    <div class="budget-summary">
+        <h3>💰 Rincian Belanja Bahan Bulanan (Budget Anak Kost)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bahan Makanan</th>
+                    <th>Jumlah</th>
+                    <th>Estimasi Harga</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Telur Ayam Pasar</td>
+                    <td>3 Tray (90 Butir)</td>
+                    <td>Rp 78.000</td>
+                </tr>
+                <tr>
+                    <td>Tempe & Tahu</td>
+                    <td>15 Papan Tempe / Tahu</td>
+                    <td>Rp 45.000</td>
+                </tr>
+                <tr>
+                    <td>Sayuran (Kangkung/Bayam/Sawi)</td>
+                    <td>Beli di pasar per 2 hari</td>
+                    <td>Rp 40.000</td>
+                </tr>
+                <tr>
+                    <td>Beras (Porsi Kecil)</td>
+                    <td>2.5 KG</td>
+                    <td>Rp 32.000</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>TOTAL ESTIMASI HARGA</strong></td>
+                    <td><strong style="color: #16794c;">Rp 195.000 / Bulan</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="warning-box">
+        ⚠️ <strong>Peringatan Diet Ekstrem:</strong> Pola makan ini memiliki defisit kalori tinggi (~600–800 kalori/hari). Pastikan kamu cukup minum air putih (minimal 2.5–3 Liter sehari). Jika terasa pusing berat, lemas berlebihan, atau berkeringat dingin, segera tambahkan porsi pakan atau konsumsi buah segar.
+    </div>
 </div>
 
 <!-- GRAFIK -->
@@ -584,7 +724,6 @@ function drawChart() {
     });
 }
 
-// Re-draw chart saat ukuran layar berubah
 window.addEventListener("resize", drawChart);
 </script>
 
